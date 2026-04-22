@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FFFFFF"
+    android:orientation="horizontal"
+    android:padding="6dp">
+
+    <TextView
+        android:id="@+id/periodText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textColor="#22332A"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/sessionsText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textColor="#22332A"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/caloriesValueText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textColor="#22332A"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/repsValueText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textColor="#22332A"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/minutesValueText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textColor="#22332A"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/growthText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textColor="#22332A"
+        android:textSize="12sp" />
+
+</LinearLayout>

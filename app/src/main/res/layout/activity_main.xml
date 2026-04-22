@@ -271,7 +271,7 @@
             android:text="Daily Trend (30 days)"
             android:textStyle="bold" />
 
-        <com.github.mikephil.charting.charts.LineChart
+        <com.codex.exercisevision.TrendChartView
             android:id="@+id/dailyChart"
             android:layout_width="match_parent"
             android:layout_height="220dp" />
@@ -283,7 +283,7 @@
             android:text="Monthly Trend (12 months)"
             android:textStyle="bold" />
 
-        <com.github.mikephil.charting.charts.LineChart
+        <com.codex.exercisevision.TrendChartView
             android:id="@+id/monthlyChart"
             android:layout_width="match_parent"
             android:layout_height="220dp" />
@@ -295,7 +295,7 @@
             android:text="Yearly Trend"
             android:textStyle="bold" />
 
-        <com.github.mikephil.charting.charts.LineChart
+        <com.codex.exercisevision.TrendChartView
             android:id="@+id/yearlyChart"
             android:layout_width="match_parent"
             android:layout_height="220dp" />

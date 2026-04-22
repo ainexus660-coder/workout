@@ -23,12 +23,6 @@ import androidx.camera.view.PreviewView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.github.mikephil.charting.charts.LineChart
-import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.data.LineData
-import com.github.mikephil.charting.data.LineDataSet
-import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.google.mlkit.vision.common.InputImage
@@ -110,9 +104,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var feedbackText: TextView
     private lateinit var periodSpinner: Spinner
     private lateinit var analyticsRecyclerView: RecyclerView
-    private lateinit var dailyChart: LineChart
-    private lateinit var monthlyChart: LineChart
-    private lateinit var yearlyChart: LineChart
+    private lateinit var dailyChart: TrendChartView
+    private lateinit var monthlyChart: TrendChartView
+    private lateinit var yearlyChart: TrendChartView
 
     private val gson = Gson()
     private val sessions = mutableListOf<SessionRecord>()
@@ -647,7 +641,7 @@ class MainActivity : AppCompatActivity() {
         } else {
             exerciseProfiles[exercise]?.tips ?: exerciseProfiles.getValue("Unknown").tips
         }
-        feedbackText.text = displayFeedback.take(3).joinToString("\n") { "• $it" }
+        feedbackText.text = displayFeedback.take(3).joinToString("\n") { "- $it" }
     }
 
     private fun loadSessions() {
@@ -685,50 +679,13 @@ class MainActivity : AppCompatActivity() {
         renderLineChart(yearlyChart, yearly, "Yearly")
     }
 
-    private fun renderLineChart(chart: LineChart, rows: List<AggregatedRow>, noDataLabel: String) {
-        if (rows.isEmpty()) {
-            chart.clear()
-            chart.setNoDataText("$noDataLabel data appears after your first completed session.")
-            chart.invalidate()
-            return
-        }
-
-        val labels = rows.map { it.period }
-        val caloriesEntries = rows.mapIndexed { index, row ->
-            Entry(index.toFloat(), row.calories.toFloat())
-        }
-        val repsEntries = rows.mapIndexed { index, row ->
-            Entry(index.toFloat(), row.reps.toFloat())
-        }
-
-        val caloriesSet = LineDataSet(caloriesEntries, "Calories").apply {
-            color = 0xFF1F8A5B.toInt()
-            setCircleColor(0xFF1F8A5B.toInt())
-            lineWidth = 2f
-            circleRadius = 3f
-            valueTextSize = 9f
-        }
-
-        val repsSet = LineDataSet(repsEntries, "Reps").apply {
-            color = 0xFFF18731.toInt()
-            setCircleColor(0xFFF18731.toInt())
-            lineWidth = 2f
-            circleRadius = 3f
-            valueTextSize = 9f
-        }
-
-        chart.description.isEnabled = false
-        chart.axisRight.isEnabled = false
-        chart.legend.isEnabled = true
-        chart.xAxis.apply {
-            position = XAxis.XAxisPosition.BOTTOM
-            granularity = 1f
-            valueFormatter = IndexAxisValueFormatter(labels)
-            labelRotationAngle = -35f
-        }
-        chart.axisLeft.axisMinimum = 0f
-        chart.data = LineData(caloriesSet, repsSet)
-        chart.invalidate()
+    private fun renderLineChart(chart: TrendChartView, rows: List<AggregatedRow>, noDataLabel: String) {
+        chart.setData(
+            labels = rows.map { it.period },
+            calories = rows.map { it.calories.toFloat() },
+            reps = rows.map { it.reps.toFloat() },
+            noDataMessage = "$noDataLabel data appears after your first completed session."
+        )
     }
 
     private fun aggregateRows(period: ViewPeriod): List<AggregatedRow> {
